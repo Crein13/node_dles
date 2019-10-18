@@ -3,9 +3,9 @@ const { attributes } = require('structure');
 const User = attributes({
   // Add atttributes here
   id: Number,
-  firstName: String,
-  lastName: String,
-  middleName: String,
+  fullName: String,
+  email: String,
+  departmentId: Number,
   createdAt: Date,
   updatedAt: Date,
 })(class User {
