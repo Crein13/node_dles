@@ -1,0 +1,4 @@
+name: node_dles
+description: 'NodeJS Training'
+framework: Amber.js
+template: Express.js
