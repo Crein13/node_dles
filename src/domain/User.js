@@ -6,10 +6,12 @@ const User = attributes({
   fullName: String,
   email: String,
   departmentId: Number,
+  isLoggedIn: Boolean,
+  loginAt: Date,
+  logoutAt: Date,
+  expiresAt: Date,
   createdAt: Date,
   updatedAt: Date,
-})(class User {
-});
-
+})(class User {});
 
 module.exports = User;

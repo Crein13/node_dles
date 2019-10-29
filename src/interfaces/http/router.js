@@ -1,4 +1,5 @@
 const { Router, static } = require('express');
+const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const compression = require('compression');
@@ -7,16 +8,25 @@ const controller = require('./utils/createControllerRoutes');
 const path = require('path');
 const openApiDoc = require('./openApi.json');
 
-module.exports = ({ config, containerMiddleware, loggerMiddleware, errorHandler, openApiMiddleware }) => {
+module.exports = ({
+  config,
+  containerMiddleware,
+  loggerMiddleware,
+  errorHandler,
+  openApiMiddleware,
+}) => {
   const router = Router();
   router.use(containerMiddleware);
 
   /* istanbul ignore if */
-  if(config.env !== 'test') {
+  if (config.env !== 'test') {
     router.use(loggerMiddleware);
   }
 
   const apiRouter = Router();
+  // const app = express();
+
+  // app.use(bodyParser.urlencoded({ extended: false }));
 
   apiRouter
     .use(methodOverride('X-HTTP-Method-Override'))
@@ -40,7 +50,12 @@ module.exports = ({ config, containerMiddleware, loggerMiddleware, errorHandler,
 
   apiRouter.use('/users', controller('controllers/UserController.js'));
 
-  apiRouter.use('/departments', controller('controllers/DepartmentController.js'));
+  apiRouter.use(
+    '/departments',
+    controller('controllers/DepartmentController.js'),
+  );
+
+  apiRouter.use('/login', controller('controllers/LoginController.js'));
   /* apiRoutes END */
 
   router.use('/api', apiRouter);

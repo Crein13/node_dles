@@ -11,9 +11,9 @@ class ListUsers extends Operation {
 
     try {
       const users = await this.UserRepository.getAll({});
-
+      console.log(users);
       this.emit(SUCCESS, users);
-    } catch(error) {
+    } catch (error) {
       this.emit(ERROR, error);
     }
   }
@@ -22,4 +22,3 @@ class ListUsers extends Operation {
 ListUsers.setEvents(['SUCCESS', 'ERROR', 'VALIDATION_ERROR', 'NOT_FOUND']);
 
 module.exports = ListUsers;
-    

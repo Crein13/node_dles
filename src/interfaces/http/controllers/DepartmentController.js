@@ -1,17 +1,16 @@
-
 const { Router } = require('express');
 const { BaseController } = require('@amberjs/core');
+const Status = require('http-status');
 
 class DepartmentsController extends BaseController {
-  
   constructor() {
     super();
     const router = Router();
-    // router.get('/', this.injector('ListDepartments'), this.index);
-    // router.post('/', this.injector('CreateDepartment'), this.create);
-    // router.get('/:id', this.injector('ShowDepartment'), this.show);
-    // router.put('/:id', this.injector('UpdateDepartment'), this.update);
-    // router.delete('/:id', this.injector('DeleteDepartment'), this.delete);
+    router.get('/', this.injector('ListDepartments'), this.index);
+    router.post('/', this.injector('CreateDepartment'), this.create);
+    router.get('/:id', this.injector('ShowDepartment'), this.show);
+    router.put('/:id', this.injector('UpdateDepartment'), this.update);
+    router.delete('/:id', this.injector('DeleteDepartment'), this.delete);
 
     return router;
   }
@@ -22,109 +21,104 @@ class DepartmentsController extends BaseController {
    * The following methods are already inherited upon extending BaseController class from @amberjs/core
    */
 
-  // index(req, res, next) {
-  //   const { operation } = req;
-  //   const { SUCCESS, ERROR } = operation.events;
+  index(req, res, next) {
+    const { operation } = req;
+    const { SUCCESS, ERROR } = operation.events;
 
-  //   operation
-  //     .on(SUCCESS, (result) => {
-  //       res
-  //         .status(Status.OK)
-  //         .json(result);
-  //     })
-  //     .on(ERROR, next);
+    operation
+      .on(SUCCESS, result => {
+        console.log('index run!');
+        res.status(Status.OK).json(result);
+      })
 
-  //   operation.execute();
-  // }
+      .on(ERROR, next);
 
-  // show(req, res, next) {
-  //   const { operation } = req;
+    operation.execute();
+  }
 
-  //   const { SUCCESS, ERROR, NOT_FOUND } = operation.events;
+  show(req, res, next) {
+    const { operation } = req;
 
-  //   operation
-  //     .on(SUCCESS, (result) => {
-  //       res
-  //         .status(Status.OK)
-  //         .json(result);
-  //     })
-  //     .on(NOT_FOUND, (error) => {
-  //       res.status(Status.NOT_FOUND).json({
-  //         type: 'NotFoundError',
-  //         details: error.details
-  //       });
-  //     })
-  //     .on(ERROR, next);
+    const { SUCCESS, ERROR, NOT_FOUND } = operation.events;
 
-  //   operation.execute(Number(req.params.id));
-  // }
+    operation
+      .on(SUCCESS, result => {
+        res.status(Status.OK).json(result);
+      })
+      .on(NOT_FOUND, error => {
+        res.status(Status.NOT_FOUND).json({
+          type: 'NotFoundError',
+          details: error.details,
+        });
+      })
+      .on(ERROR, next);
 
-  // create(req, res, next) {
-  //   const { operation } = req;
-  //   const { SUCCESS, ERROR, VALIDATION_ERROR } = operation.events;
+    operation.execute(Number(req.params.id));
+  }
 
-  //   operation
-  //     .on(SUCCESS, (result) => {
-  //       res
-  //         .status(Status.CREATED)
-  //         .json(result);
-  //     })
-  //     .on(VALIDATION_ERROR, (error) => {
-  //       res.status(Status.BAD_REQUEST).json({
-  //         type: 'ValidationError',
-  //         details: error.details
-  //       });
-  //     })
-  //     .on(ERROR, next);
+  create(req, res, next) {
+    const { operation } = req;
+    const { SUCCESS, ERROR, VALIDATION_ERROR } = operation.events;
 
-  //   operation.execute(req.body);
-  // }
+    operation
+      .on(SUCCESS, result => {
+        res.status(Status.CREATED).json(result);
+      })
+      .on(VALIDATION_ERROR, error => {
+        res.status(Status.BAD_REQUEST).json({
+          type: 'ValidationError',
+          details: error.details,
+        });
+      })
+      .on(ERROR, next);
 
-  // update(req, res, next) {
-  //   const { operation } = req;
-  //   const { SUCCESS, ERROR, VALIDATION_ERROR, NOT_FOUND } = operation.events;
+    operation.execute(req.body);
+  }
 
-  //   operation
-  //     .on(SUCCESS, (result) => {
-  //       res
-  //         .status(Status.ACCEPTED)
-  //         .json(result);
-  //     })
-  //     .on(VALIDATION_ERROR, (error) => {
-  //       res.status(Status.BAD_REQUEST).json({
-  //         type: 'ValidationError',
-  //         details: error.details
-  //       });
-  //     })
-  //     .on(NOT_FOUND, (error) => {
-  //       res.status(Status.NOT_FOUND).json({
-  //         type: 'NotFoundError',
-  //         details: error.details
-  //       });
-  //     })
-  //     .on(ERROR, next);
+  update(req, res, next) {
+    const { operation } = req;
+    const { SUCCESS, ERROR, VALIDATION_ERROR, NOT_FOUND } = operation.events;
 
-  //   operation.execute(Number(req.params.id), req.body);
-  // }
+    operation
+      .on(SUCCESS, result => {
+        res.status(Status.ACCEPTED).json(result);
+      })
+      .on(VALIDATION_ERROR, error => {
+        res.status(Status.BAD_REQUEST).json({
+          type: 'ValidationError',
+          details: error.details,
+        });
+      })
+      .on(NOT_FOUND, error => {
+        res.status(Status.NOT_FOUND).json({
+          type: 'NotFoundError',
+          details: error.details,
+        });
+      })
+      .on(ERROR, next);
 
-  // delete(req, res, next) {
-  //   const { operation } = req;
-  //   const { SUCCESS, ERROR,  NOT_FOUND } = operation.events;
+    operation.execute(Number(req.params.id), req.body);
+  }
 
-  //   operation
-  //     .on(SUCCESS, () => {
-  //       res.status(Status.ACCEPTED).end();
-  //     })
-  //     .on(NOT_FOUND, (error) => {
-  //       res.status(Status.NOT_FOUND).json({
-  //         type: 'NotFoundError',
-  //         details: error.details
-  //       });
-  //     })
-  //     .on(ERROR, next);
+  delete(req, res, next) {
+    const { operation } = req;
+    const { SUCCESS, ERROR, NOT_FOUND } = operation.events;
+    console.log('req.params', req.params.id);
 
-  //   operation.execute(Number(req.params.id));
-  // }
+    operation
+      .on(SUCCESS, () => {
+        res.status(Status.ACCEPTED).end();
+      })
+      .on(NOT_FOUND, error => {
+        res.status(Status.NOT_FOUND).json({
+          type: 'NotFoundError',
+          details: error.details,
+        });
+      })
+      .on(ERROR, next);
+
+    operation.execute(Number(req.params.id));
+  }
 }
 
 module.exports = DepartmentsController;

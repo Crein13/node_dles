@@ -8,6 +8,7 @@ module.exports = {
   /**
    * The default environment
    */
+
   env: process.env.NODE_ENV,
   /**
    * Default debug settings
@@ -16,7 +17,13 @@ module.exports = {
   /**
    * port if funs on server
    */
-  port: process.env.PORT,
+  // port: process.env.PORT,
+  port: 5000,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  /**
+   *
+   */
   /**
    * Boolean config to enable serverless
    */
@@ -24,14 +31,14 @@ module.exports = {
   /**
    * Source directory of resources to be autoloaded
    */
-  sources: { 
+  sources: {
     domain: ['src/domain'],
-    app: ['src/app'],
+    app: ['src/app/'],
     dataSource: ['src/infra/dataSources'],
     model: ['src/infra/models'],
     repository: ['src/infra/repositories'],
     middleware: ['src/interfaces/http/middlewares'],
     controller: ['src/interfaces/http/controllers'],
-    router: 'src/interfaces/http/router.js'
+    router: 'src/interfaces/http/router.js',
   },
 };

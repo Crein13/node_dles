@@ -12,8 +12,8 @@ class DeleteUser extends Operation {
     try {
       await this.UserRepository.remove(id);
       this.emit(SUCCESS);
-    } catch(error) {
-      if(error.message === 'NotFoundError') {
+    } catch (error) {
+      if (error.message === 'NotFoundError') {
         return this.emit(NOT_FOUND, error);
       }
 
@@ -25,4 +25,3 @@ class DeleteUser extends Operation {
 DeleteUser.setEvents(['SUCCESS', 'ERROR', 'VALIDATION_ERROR', 'NOT_FOUND']);
 
 module.exports = DeleteUser;
-    
