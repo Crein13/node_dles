@@ -1,7 +1,7 @@
-const { Operation } = require('@amberjs/core');
+const { BaseRepository } = require('@amberjs/core');
 const jwt = require('jsonwebtoken');
 
-class Jwt extends Operation {
+class Jwt extends BaseRepository {
   constructor({}) {
     super();
   }
@@ -13,12 +13,12 @@ class Jwt extends Operation {
       {
         expiresIn: 7600,
       },
-      (err, token) => {
-        res.json({
-          success: true,
-          token: 'bearer ' + token,
-        });
-      },
+      // (err, token) => {
+      //   res.json({
+      //     success: true,
+      //     token: 'bearer ' + token,
+      //   });
+      // },
     );
   }
 

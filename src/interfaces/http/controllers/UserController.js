@@ -6,6 +6,7 @@ class UsersController extends BaseController {
   constructor() {
     super();
     const router = Router();
+    router.post('/login', this.injector('Login'), this.postLogin);
     router.get('/', this.injector('ListUsers'), this.index);
     router.post('/', this.injector('CreateUser'), this.create);
     router.get('/:id', this.injector('ShowUser'), this.show);
@@ -21,18 +22,32 @@ class UsersController extends BaseController {
    * The following methods are already inherited upon extending BaseController class from @amberjs/core
    */
 
-  // index(req, res, next) {
-  //   const { operation } = req;
-  //   const { SUCCESS, ERROR } = operation.events;
+  postLogin(req, res, next) {
+    const { operation } = req;
+    const { SUCCESS, ERROR } = operation.events;
 
-  //   operation
-  //     .on(SUCCESS, result => {
-  //       res.status(Status.OK).json(result);
-  //     })
-  //     .on(ERROR, next);
+    const token = '';
+    operation
+      .on(SUCCES, result => {
+        res.status(Status.Ok).json(result);
+      })
+      .on(ERROR, next);
 
-  //   operation.execute();
-  // }
+    operation.execute(token);
+  }
+
+  index(req, res, next) {
+    const { operation } = req;
+    const { SUCCESS, ERROR } = operation.events;
+
+    operation
+      .on(SUCCESS, result => {
+        res.status(Status.OK).json(result);
+      })
+      .on(ERROR, next);
+
+    operation.execute();
+  }
 
   // show(req, res, next) {
   //   const { operation } = req;

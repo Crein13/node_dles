@@ -36,89 +36,89 @@ class DepartmentsController extends BaseController {
     operation.execute();
   }
 
-  show(req, res, next) {
-    const { operation } = req;
+  // show(req, res, next) {
+  //   const { operation } = req;
 
-    const { SUCCESS, ERROR, NOT_FOUND } = operation.events;
+  //   const { SUCCESS, ERROR, NOT_FOUND } = operation.events;
 
-    operation
-      .on(SUCCESS, result => {
-        res.status(Status.OK).json(result);
-      })
-      .on(NOT_FOUND, error => {
-        res.status(Status.NOT_FOUND).json({
-          type: 'NotFoundError',
-          details: error.details,
-        });
-      })
-      .on(ERROR, next);
+  //   operation
+  //     .on(SUCCESS, result => {
+  //       res.status(Status.OK).json(result);
+  //     })
+  //     .on(NOT_FOUND, error => {
+  //       res.status(Status.NOT_FOUND).json({
+  //         type: 'NotFoundError',
+  //         details: error.details,
+  //       });
+  //     })
+  //     .on(ERROR, next);
 
-    operation.execute(Number(req.params.id));
-  }
+  //   operation.execute(Number(req.params.id));
+  // }
 
-  create(req, res, next) {
-    const { operation } = req;
-    const { SUCCESS, ERROR, VALIDATION_ERROR } = operation.events;
+  // create(req, res, next) {
+  //   const { operation } = req;
+  //   const { SUCCESS, ERROR, VALIDATION_ERROR } = operation.events;
 
-    operation
-      .on(SUCCESS, result => {
-        res.status(Status.CREATED).json(result);
-      })
-      .on(VALIDATION_ERROR, error => {
-        res.status(Status.BAD_REQUEST).json({
-          type: 'ValidationError',
-          details: error.details,
-        });
-      })
-      .on(ERROR, next);
+  //   operation
+  //     .on(SUCCESS, result => {
+  //       res.status(Status.CREATED).json(result);
+  //     })
+  //     .on(VALIDATION_ERROR, error => {
+  //       res.status(Status.BAD_REQUEST).json({
+  //         type: 'ValidationError',
+  //         details: error.details,
+  //       });
+  //     })
+  //     .on(ERROR, next);
 
-    operation.execute(req.body);
-  }
+  //   operation.execute(req.body);
+  // }
 
-  update(req, res, next) {
-    const { operation } = req;
-    const { SUCCESS, ERROR, VALIDATION_ERROR, NOT_FOUND } = operation.events;
+  // update(req, res, next) {
+  //   const { operation } = req;
+  //   const { SUCCESS, ERROR, VALIDATION_ERROR, NOT_FOUND } = operation.events;
 
-    operation
-      .on(SUCCESS, result => {
-        res.status(Status.ACCEPTED).json(result);
-      })
-      .on(VALIDATION_ERROR, error => {
-        res.status(Status.BAD_REQUEST).json({
-          type: 'ValidationError',
-          details: error.details,
-        });
-      })
-      .on(NOT_FOUND, error => {
-        res.status(Status.NOT_FOUND).json({
-          type: 'NotFoundError',
-          details: error.details,
-        });
-      })
-      .on(ERROR, next);
+  //   operation
+  //     .on(SUCCESS, result => {
+  //       res.status(Status.ACCEPTED).json(result);
+  //     })
+  //     .on(VALIDATION_ERROR, error => {
+  //       res.status(Status.BAD_REQUEST).json({
+  //         type: 'ValidationError',
+  //         details: error.details,
+  //       });
+  //     })
+  //     .on(NOT_FOUND, error => {
+  //       res.status(Status.NOT_FOUND).json({
+  //         type: 'NotFoundError',
+  //         details: error.details,
+  //       });
+  //     })
+  //     .on(ERROR, next);
 
-    operation.execute(Number(req.params.id), req.body);
-  }
+  //   operation.execute(Number(req.params.id), req.body);
+  // }
 
-  delete(req, res, next) {
-    const { operation } = req;
-    const { SUCCESS, ERROR, NOT_FOUND } = operation.events;
-    console.log('req.params', req.params.id);
+  // delete(req, res, next) {
+  //   const { operation } = req;
+  //   const { SUCCESS, ERROR, NOT_FOUND } = operation.events;
+  //   console.log('req.params', req.params.id);
 
-    operation
-      .on(SUCCESS, () => {
-        res.status(Status.ACCEPTED).end();
-      })
-      .on(NOT_FOUND, error => {
-        res.status(Status.NOT_FOUND).json({
-          type: 'NotFoundError',
-          details: error.details,
-        });
-      })
-      .on(ERROR, next);
+  //   operation
+  //     .on(SUCCESS, () => {
+  //       res.status(Status.ACCEPTED).end();
+  //     })
+  //     .on(NOT_FOUND, error => {
+  //       res.status(Status.NOT_FOUND).json({
+  //         type: 'NotFoundError',
+  //         details: error.details,
+  //       });
+  //     })
+  //     .on(ERROR, next);
 
-    operation.execute(Number(req.params.id));
-  }
+  //   operation.execute(Number(req.params.id));
+  // }
 }
 
 module.exports = DepartmentsController;

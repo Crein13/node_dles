@@ -7,7 +7,7 @@ class ListDepartments extends Operation {
   }
 
   async execute() {
-    const { SUCCESS, ERROR } = this.eventNames;
+    const { SUCCESS, ERROR } = this.events;
 
     try {
       const departments = await this.DepartmentRepository.getAll({});

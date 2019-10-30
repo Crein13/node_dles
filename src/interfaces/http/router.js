@@ -55,7 +55,6 @@ module.exports = ({
     controller('controllers/DepartmentController.js'),
   );
 
-  apiRouter.use('/login', controller('controllers/LoginController.js'));
   /* apiRoutes END */
 
   router.use('/api', apiRouter);
