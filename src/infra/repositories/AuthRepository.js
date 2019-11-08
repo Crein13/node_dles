@@ -1,8 +1,9 @@
 const { BaseRepository } = require('@amberjs/core');
 
 class AuthRepository extends BaseRepository {
-  constructor({ GoogleClient, Jwt }) {
+  constructor(GoogleClient, Jwt) {
     super();
+
     this.GoogleClient = GoogleClient;
     this.Jwt = Jwt;
   }

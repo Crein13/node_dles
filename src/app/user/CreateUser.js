@@ -8,44 +8,29 @@ const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
       api_key:
-        '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',
+        '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',
     },
   }),
 );
 
 class CreateUser extends Operation {
-  constructor({ UserRepository }) {
+  constructor(container) {
     super();
+    console.log('container', container);
+    const { UserRepository } = container;
     this.UserRepository = UserRepository;
   }
-
-  // async execute(data) {
-  //   const { SUCCESS } = this.events;
-  //   const userData = {
-  //     ...data,
-  //   };
-  //   const user = new User(userData);
-  //   console.log(user, 'user');
-  //   try {
-  //     this.emit(SUCCESS, await this.UserRepository.add(user.toJSON()));
-  //   } catch (error) {
-  //     // this.emit(this.events[error.message], error);
-  //     if (error.message === 'ValidationError') {
-  //       return this.emit(VALIDATION_ERROR, error);
-  //     }
-  //     this.emit(ERROR, error);
-  //   }
-  // }
 
   async execute(data) {
     const { SUCCESS, ERROR, VALIDATION_ERROR } = this.events;
     const user = new User(data);
-    // console.log('data', data);
+    console.log('data', data);
+    console.log('user', user);
 
     try {
       console.log('userRepository', this.UserRepository.model);
       const newUser = await this.UserRepository.add(user.toJSON()).then(res => {
-        transporter.sendMail(
+        return transporter.sendMail(
           {
             to: data.email,
             from: 'node_dles@gmail.com',
@@ -61,10 +46,14 @@ class CreateUser extends Operation {
             // res.json({ message: 'message sent! ' });
           },
         );
+        // console.log('data.email', data.email);
       });
-      console.log('date', data.email);
+      // try {
 
-      this.emit(SUCCESS, newUser);
+      //   this.emit(SUCCESS, newUser);
+      // } catch (error) {
+      //   console.log(error);
+      // }
     } catch (error) {
       if (error.message === 'ValidationError') {
         return this.emit(VALIDATION_ERROR, error);

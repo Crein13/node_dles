@@ -1,7 +1,6 @@
 const { Operation } = require('@amberjs/core');
 class UserService extends Operation {
-  constructor({ helpers, logger }) {
-    this.helpers = helpers;
+  constructor({ logger }) {
     this.logger = logger;
     this.user = null;
   }

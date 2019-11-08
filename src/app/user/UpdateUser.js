@@ -3,6 +3,8 @@ const { Operation } = require('@amberjs/core');
 class UpdateUser extends Operation {
   constructor({ UserRepository }) {
     super();
+    // const { UserRepository } = container;
+    // console.log('container', container);
     this.UserRepository = UserRepository;
   }
 

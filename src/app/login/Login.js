@@ -9,14 +9,16 @@ const {
 class Login extends Operation {
   constructor({ UserRepository, AuthRepository, UserService }) {
     super();
+    console.logi('container', container);
     this.UserRepository = UserRepository;
     this.AuthRepository = AuthRepository;
     this.UserService = UserService;
   }
 
-  async execute(args) {
+  async execute(data) {
     try {
       let authPayload = {};
+      console.log('gothere', data);
       const date = new Date();
       const allowedDomains = 'gmail.com';
       if (process.env.NODE_ENV === 'test') {
@@ -25,7 +27,7 @@ class Login extends Operation {
           domain: 'gmail.com',
         };
       } else {
-        authPayload = await this.authRepository.verifyToken(args);
+        authPayload = await this.authRepository.verifyToken(data);
       }
 
       console.log('authPayload', authPayload);
@@ -48,7 +50,7 @@ class Login extends Operation {
       if (!allowedDomains.includes(domain) && domain) {
         throw new Error(USER_INVALID);
       }
-      if (user.isLoggedIn && !args) {
+      if (user.isLoggedIn && !data) {
         const isTokenActive =
           Math.abs(date - user.loginAt) / 1000 <= process.env.JWT_EXPIRES_IN;
 

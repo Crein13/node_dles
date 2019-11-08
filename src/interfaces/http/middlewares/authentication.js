@@ -2,7 +2,7 @@ const { createContainer } = require('awilix');
 
 const container = createContainer();
 
-const authentication = async (resolve, root, args, context, info) => {
+const authentication = async resolve => {
   const userService = container.resolve('userService');
   const unprotectedActions = ['login'];
 

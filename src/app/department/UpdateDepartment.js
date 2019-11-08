@@ -1,15 +1,15 @@
 const { Operation } = require('@amberjs/core');
 
 class UpdateDepartment extends Operation {
-  constructor({ DepartmentDepository }) {
+  constructor({ DepartmentRepository }) {
     super();
-    this.DepartmentDepository = DepartmentDepository;
+    this.DepartmentRepository = DepartmentRepository;
   }
   async execute(id, data) {
     const { SUCCESS, NOT_FOUND, VALIDATION_ERROR, ERROR } = this.events;
 
     try {
-      const department = await this.DepartmentDepository.update(id, data);
+      const department = await this.DepartmentRepository.update(id, data);
       this.emit(SUCCESS, user);
     } catch (error) {
       switch (error.message) {

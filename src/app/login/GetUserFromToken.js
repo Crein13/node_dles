@@ -30,10 +30,8 @@ class GetUserFromToken {
           isLoggedIn: false,
         });
       }
-
       throw new Error(TOKEN_INVALID);
     }
-
     return user;
   }
 }
