@@ -418,13 +418,13 @@
             "type": "boolean"
           },
           "loginAt": {
-            "type": "date"
+            "type": "string"
           },
           "logoutAt": {
-            "type": "date"
+            "type": "string"
           },
           "expiresAt": {
-            "type": "date"
+            "type": "string"
           }
         }
       },
@@ -443,13 +443,13 @@
             "type": "boolean"
           },
           "loginAt": {
-            "type": "date"
+            "type": "string"
           },
           "logoutAt": {
-            "type": "date"
+            "type": "string"
           },
           "expiresAt": {
-            "type": "date"
+            "type": "string"
           }
         }
       },

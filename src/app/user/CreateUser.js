@@ -28,8 +28,10 @@ class CreateUser extends Operation {
 
     try {
       console.log('userRepository', this.UserRepository.model);
-      const newUser = await this.UserRepository.add(user.toJSON()).then(res => {
-        return transporter.sendMail(
+      const newUser = await this.UserRepository.add(user.toJSON());
+
+      try {
+        transporter.sendMail(
           {
             to: data.email,
             from: 'node_dles@gmail.com',
@@ -38,21 +40,14 @@ class CreateUser extends Operation {
           },
           (err, info) => {
             if (err) {
-              console.log(err);
-              // res.json({ error: err });
             }
             console.log('Message sent: ' + info);
-            // res.json({ message: 'message sent! ' });
           },
         );
-        // console.log('data.email', data.email);
-      });
-      // try {
-
-      //   this.emit(SUCCESS, newUser);
-      // } catch (error) {
-      //   console.log(error);
-      // }
+        this.emit(SUCCESS, newUser);
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       if (error.message === 'ValidationError') {
         return this.emit(VALIDATION_ERROR, error);
