@@ -22,13 +22,13 @@ class UsersController extends BaseController {
    * The following methods are already inherited upon extending BaseController class from @amberjs/core
    */
 
-  postLogin(req, res, next) {
+   postLogin(req, res, next) {
     const { operation } = req;
     const { SUCCESS, ERROR } = operation.events;
 
     const token = '';
     operation
-      .on(SUCCES, result => {
+      .on(SUCCESS, result => {
         res.status(Status.Ok).json(result);
       })
       .on(ERROR, next);

@@ -1,10 +1,5 @@
 const { OAuth2Client } = require('google-auth-library');
 const { BaseRepository } = require('@amberjs/core');
-const http = require('http');
-const url = require('url');
-const open = require('open');
-const destroyer = require('server-destroy');
-const keys = require('../../../config/keys.json');
 
 class GoogleClient extends BaseRepository {
   constructor({ logger }) {

@@ -1,5 +1,6 @@
 const { Operation } = require('@amberjs/core');
 
+const AuthRepository = require('src/infra/auth/AuthRepository.js')
 const {
   USER_INVALID,
   USER_LOGGED_IN,
@@ -7,11 +8,9 @@ const {
 } = require('src/domain/Errors');
 
 class Login extends Operation {
-  constructor({ UserRepository, AuthRepository, UserService }) {
+  constructor({ UserRepository, UserService }) {
     super();
-    console.logi('container', container);
     this.UserRepository = UserRepository;
-    this.AuthRepository = AuthRepository;
     this.UserService = UserService;
   }
 
@@ -27,7 +26,7 @@ class Login extends Operation {
           domain: 'gmail.com',
         };
       } else {
-        authPayload = await this.authRepository.verifyToken(data);
+        authPayload = await AuthRepository.verifyToken(data);
       }
 
       console.log('authPayload', authPayload);
@@ -74,7 +73,7 @@ class Login extends Operation {
       user = await this.UserRepository.update(user.id, userDataToUpdate);
 
       const secretKey = date.valueOf().toString();
-      const accessToken = this.AuthRepository.signtJwt(
+      const accessToken = AuthRepository.signtJwt(
         { id, email: userEmail },
         secretKey,
       );
@@ -85,8 +84,8 @@ class Login extends Operation {
         accessToken,
         expiresIn,
       };
-    } catch (error) {
-      throw new Error(error);
+    } catch (err) {
+      throw new Error(err);
     }
   }
 }

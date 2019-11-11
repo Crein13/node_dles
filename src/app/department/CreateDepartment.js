@@ -13,9 +13,7 @@ class CreateDepartment extends Operation {
     const department = new Department(data);
 
     try {
-      const newDepartment = await this.DepartmentRepository.add(
-        department.toJSON(),
-      );
+      const newDepartment = await this.DepartmentRepository.add(department.toJSON());
       this.emit(SUCCESS, newDepartment);
     } catch (error) {
       if (error.message === 'ValidationError') {

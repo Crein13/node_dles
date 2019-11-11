@@ -13,10 +13,8 @@ const transporter = nodemailer.createTransport(
 );
 
 class CreateUser extends Operation {
-  constructor(container) {
+  constructor({ UserRepository }) {
     super();
-    console.log('container', container);
-    const { UserRepository } = container;
     this.UserRepository = UserRepository;
   }
 
@@ -27,27 +25,33 @@ class CreateUser extends Operation {
     console.log('user', user);
 
     try {
-      console.log('userRepository', this.UserRepository.model);
-      const newUser = await this.UserRepository.add(user.toJSON());
+      const loginUser = await this.UserRepository.login(user);
 
-      try {
-        transporter.sendMail(
-          {
-            to: data.email,
-            from: 'node_dles@gmail.com',
-            subject: 'Created User Succeeded!',
-            html: '<h1>You Successfully created!</h1>',
-          },
-          (err, info) => {
-            if (err) {
-            }
-            console.log('Message sent: ' + info);
-          },
-        );
-        this.emit(SUCCESS, newUser);
-      } catch (error) {
-        console.log(error);
+      if (!loginUser) {
+        const newUser = await this.UserRepository.add(user);
+
+        try {
+          transporter.sendMail(
+            {
+              to: data.email,
+              from: 'bmatias@stratpoint.com',
+              subject: 'Created User Succeeded!',
+              html: '<h1>You Successfully created!</h1>',
+            },
+            (err, info) => {
+              if (err) {
+                console.log('User already exists');
+              }
+              console.log(`Message sent: ${info}`);
+            },
+          );
+          this.emit(SUCCESS, newUser);
+        } catch (error) {
+          console.log(error);
+        }
       }
+
+      this.emit(SUCCESS, loginUser);
     } catch (error) {
       if (error.message === 'ValidationError') {
         return this.emit(VALIDATION_ERROR, error);

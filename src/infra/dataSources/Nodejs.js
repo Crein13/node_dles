@@ -4,8 +4,8 @@ module.exports = {
   config: {
     host: '127.0.0.1',
     username: 'postgres',
-    password: 'postjun1997',
-    database: 'nodeapi',
+    password: 'stratpoint',
+    database: 'amber_training',
     dialect: 'postgres',
     isSync: 'true',
   },

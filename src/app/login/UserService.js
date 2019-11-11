@@ -1,6 +1,7 @@
 const { Operation } = require('@amberjs/core');
 class UserService extends Operation {
   constructor({ logger }) {
+    super();
     this.logger = logger;
     this.user = null;
   }
@@ -8,7 +9,7 @@ class UserService extends Operation {
   setUser(user) {
     this.user = user;
 
-    return this;
+    return this.user;
   }
 
   getUser() {

@@ -1,13 +1,13 @@
 const { Operation } = require('@amberjs/core');
 
 class Login extends Operation {
-  constructor({ userRepository }) {
-    this.userRepository = userRepository;
+  constructor({ UserRepository }) {
+    this.UserRepository = UserRepository;
   }
 
   async execute(user) {
     try {
-      await this.userRepository.update(user.id, {
+      await this.UserRepository.update(user.id, {
         isLoggedIn: false,
         logOutAt: new Date(),
       });

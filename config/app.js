@@ -17,8 +17,7 @@ module.exports = {
   /**
    * port if funs on server
    */
-  // port: process.env.PORT,
-  port: 5000,
+  port: process.env.PORT,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,

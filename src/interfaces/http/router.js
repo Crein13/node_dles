@@ -48,7 +48,7 @@ module.exports = ({
 
   // apiRouter.use('/users', controller('controllers/UsersController'));
 
-  apiRouter.use('/users', controller('controllers/UserController.js'));
+  apiRouter.use('/users', controller('controllers/UsersController.js'));
 
   apiRouter.use(
     '/departments',
